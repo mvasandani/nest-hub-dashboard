@@ -13,11 +13,12 @@
   --card:#20344b;
   --border:#304a63;
   --text:#f5f8ff;
-  --muted:#aebfd0;
+  --muted:#c1d0df;
   --blue:#8ed7f5;
   --green:#8ce0b2;
   --yellow:#ffd27d;
 }
+
 * { box-sizing:border-box; }
 
 html,body {
@@ -32,7 +33,7 @@ html,body {
 main {
   width:100%;
   min-height:100vh;
-  padding:22px 28px;
+  padding:20px 24px;
   display:flex;
   flex-direction:column;
   gap:14px;
@@ -42,16 +43,17 @@ header {
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
+  gap:16px;
 }
 
 .eyebrow {
   color:var(--muted);
-  font-size:13px;
+  font-size:16px;
   letter-spacing:1px;
 }
 
 #clock {
-  font-size:75px;
+  font-size:76px;
   font-weight:700;
   letter-spacing:-3px;
   line-height:1.1;
@@ -60,8 +62,8 @@ header {
 
 #date {
   color:var(--muted);
-  font-size:16px;
-  margin-top:3px;
+  font-size:19px;
+  margin-top:5px;
 }
 
 .weather {
@@ -69,21 +71,28 @@ header {
 }
 
 #temperature {
-  font-size:42px;
+  font-size:46px;
   font-weight:700;
 }
 
 #conditions {
-  font-size:15px;
+  font-size:19px;
   color:var(--muted);
-  margin-top:3px;
+  margin-top:4px;
 }
 
 .weather-extra {
-  font-size:12px;
+  font-size:16px;
   color:var(--muted);
-  margin-top:8px;
-  line-height:1.7;
+  margin-top:9px;
+  line-height:1.6;
+}
+
+.section-title {
+  font-size:16px;
+  color:var(--muted);
+  letter-spacing:1px;
+  margin-top:3px;
 }
 
 .grid {
@@ -96,59 +105,43 @@ header {
   background:var(--card);
   border:1px solid var(--border);
   border-radius:15px;
-  padding:15px 17px;
+  padding:16px 18px;
   min-width:0;
 }
 
 .card-title {
-  font-size:14px;
+  font-size:19px;
   font-weight:600;
-  color:#d4e2f0;
+  color:#e0ebf6;
   margin-bottom:9px;
 }
 
 .reading {
-  font-size:29px;
+  font-size:39px;
   font-weight:700;
 }
 
 .humidity {
-  font-size:15px;
+  font-size:21px;
   color:var(--blue);
   margin-top:5px;
 }
 
 .status {
-  font-size:13px;
+  font-size:15px;
   color:var(--muted);
-  line-height:1.45;
-}
-
-.section-title {
-  font-size:12px;
-  color:var(--muted);
-  letter-spacing:1px;
-  margin-top:2px;
-}
-
-.info-grid {
-  display:grid;
-  grid-template-columns:1.5fr 1fr 1fr;
-  gap:12px;
-}
-
-.info-grid .card {
-  min-height:105px;
+  line-height:1.4;
+  margin-top:5px;
 }
 
 .info-main {
-  font-size:17px;
+  font-size:24px;
   font-weight:600;
-  margin-bottom:6px;
+  margin-bottom:7px;
 }
 
 .info-sub {
-  font-size:12px;
+  font-size:17px;
   color:var(--muted);
   line-height:1.5;
 }
@@ -157,22 +150,30 @@ footer {
   margin-top:auto;
   display:flex;
   justify-content:space-between;
-  color:#8298ad;
-  font-size:11px;
+  gap:12px;
+  color:#a1b4c7;
+  font-size:13px;
   padding-top:3px;
 }
 
 @media(max-width:650px) {
-  main { padding:13px; gap:9px; }
-  #clock { font-size:47px; }
-  #temperature { font-size:29px; }
-  #date { font-size:12px; }
-  .card { padding:10px; }
-  .reading { font-size:22px; }
-  .info-grid { gap:7px; }
+  main { padding:13px; gap:11px; }
+  #clock { font-size:49px; }
+  #temperature { font-size:32px; }
+  #date { font-size:15px; }
+  .eyebrow { font-size:13px; }
+  .weather-extra { font-size:12px; }
+  #conditions { font-size:15px; }
+  .card { padding:11px; }
+  .card-title { font-size:15px; }
+  .reading { font-size:27px; }
+  .humidity { font-size:16px; }
+  .status { font-size:12px; }
+  .section-title { font-size:13px; }
   .grid { gap:7px; }
-  .card-title { font-size:12px; }
-  .status,.info-sub { font-size:11px; }
+  .info-main { font-size:20px; }
+  .info-sub { font-size:14px; }
+  footer { font-size:10px; }
 }
 </style>
 </head>
@@ -205,7 +206,7 @@ footer {
     <div class="reading" id="office-temp">--°C</div>
     <div class="humidity" id="office-humidity">💧 --%</div>
     <div class="status" id="office-status">
-      Awaiting Homey connection
+      Connecting...
     </div>
   </div>
 
@@ -214,7 +215,7 @@ footer {
     <div class="reading" id="living-temp">--°C</div>
     <div class="humidity" id="living-humidity">💧 --%</div>
     <div class="status" id="living-status">
-      Awaiting Homey connection
+      Connecting...
     </div>
   </div>
 
@@ -223,15 +224,14 @@ footer {
     <div class="reading" id="bedroom-temp">--°C</div>
     <div class="humidity" id="bedroom-humidity">💧 --%</div>
     <div class="status" id="bedroom-status">
-      Awaiting Homey connection
+      Connecting...
     </div>
   </div>
 </section>
 
 <div class="section-title">YOUR DAY</div>
 
-<section class="info-grid">
-
+<section>
   <div class="card">
     <div class="card-title">📅 Next Work Meeting</div>
     <div class="info-main" id="meeting-title">
@@ -241,31 +241,10 @@ footer {
       Secure calendar integration coming next
     </div>
   </div>
-
-  <div class="card">
-    <div class="card-title">✓ Reminders</div>
-    <div class="info-main" id="reminder-title">
-      Not connected
-    </div>
-    <div class="info-sub" id="reminder-details">
-      Reminders integration pending
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">🔔 Nest Doorbell</div>
-    <div class="info-main" id="doorbell-title">
-      Not connected
-    </div>
-    <div class="info-sub" id="doorbell-details">
-      Homey doorbell status pending
-    </div>
-  </div>
-
 </section>
 
 <footer>
-  <span>HOME DASHBOARD · VERSION 2</span>
+  <span>HOME DASHBOARD · VERSION 3</span>
   <span id="updated">Weather updating...</span>
 </footer>
 
@@ -275,6 +254,9 @@ footer {
 "use strict";
 
 const TIME_ZONE = "Asia/Dubai";
+
+const SENSOR_API =
+  "https://homey-sensor-bridge.mvasandani.workers.dev/api/sensors";
 
 function formatTime(date) {
   return new Intl.DateTimeFormat("en-US", {
@@ -381,28 +363,98 @@ async function updateWeather() {
 updateWeather();
 setInterval(updateWeather,15*60*1000);
 
+// HOMEY LIVE SENSOR INTEGRATION
+
+const SENSOR_ROOMS = [
+  { key:"office", id:"office" },
+  { key:"livingRoom", id:"living" },
+  { key:"bedroom", id:"bedroom" }
+];
+
+function updateRoom(room, reading) {
+  const temperature =
+    document.getElementById(room.id+"-temp");
+  const humidity =
+    document.getElementById(room.id+"-humidity");
+  const status =
+    document.getElementById(room.id+"-status");
+
+  if(!reading ||
+     typeof reading.temperature!=="number" ||
+     typeof reading.humidity!=="number") {
+    status.textContent="Waiting for sensor data";
+    return;
+  }
+
+  temperature.textContent =
+    reading.temperature.toFixed(1)+"°C";
+
+  humidity.textContent =
+    "💧 "+Math.round(reading.humidity)+"%";
+
+  if(reading.updatedAt) {
+    const lastUpdate=new Date(reading.updatedAt);
+    const ageMinutes=
+      (Date.now()-lastUpdate.getTime())/60000;
+
+    if(Number.isFinite(ageMinutes) &&
+       ageMinutes>15) {
+      status.textContent =
+        "Updated "+formatTime(lastUpdate)+
+        " · Delayed";
+    } else {
+      status.textContent =
+        "Updated "+formatTime(lastUpdate);
+    }
+  } else {
+    status.textContent="Reading received";
+  }
+}
+
+async function updateSensors() {
+  try {
+    const response=await fetch(SENSOR_API,{
+      cache:"no-store"
+    });
+
+    if(!response.ok) {
+      throw new Error("Sensor request failed");
+    }
+
+    const data=await response.json();
+    const rooms=data.rooms||{};
+
+    SENSOR_ROOMS.forEach(room=>{
+      updateRoom(room,rooms[room.key]);
+    });
+
+  } catch(error) {
+    SENSOR_ROOMS.forEach(room=>{
+      document.getElementById(
+        room.id+"-status"
+      ).textContent="Connection unavailable";
+    });
+
+    console.error("Sensor update failed:",error);
+  }
+}
+
+updateSensors();
+setInterval(updateSensors,60*1000);
+
 /*
   FUTURE SECURE INTEGRATIONS
-
-  Homey:
-    Office temperature and humidity
-    Living Room temperature and humidity
-    Master Bedroom temperature and humidity
-    Nest Doorbell events/status
 
   Microsoft 365:
     Next upcoming Outlook work meeting
 
-  Reminders:
-    Selected upcoming personal reminders
+  Nest Doorbell:
+    Optional future integration
 
   IMPORTANT:
   Do not put Homey access tokens,
-  Microsoft credentials, private calendar URLs,
-  or API secrets in this public HTML file.
-
-  These integrations require a private,
-  authenticated data source.
+  Microsoft credentials or API secrets
+  in this public HTML file.
 */
 </script>
 </body>
