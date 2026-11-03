@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="refresh" content="3600">
+<title>Home Dashboard</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101d2d;color:#f5f8ff;font-family:Arial,Helvetica,sans-serif}
+main{width:100%;min-height:100vh;padding:28px 36px;display:flex;flex-direction:column;justify-content:space-between}
+header{display:flex;align-items:center;justify-content:space-between}
+.small{color:#aebfd0;font-size:17px}
+#clock{font-size:92px;font-weight:600;letter-spacing:-4px;line-height:1.1}
+#date{font-size:21px;color:#c6d4e2;margin-top:7px}
+.weather{text-align:right}
+#temperature{font-size:48px;font-weight:bold}
+#conditions{font-size:18px;color:#c6d4e2;margin-top:6px}
+.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:25px}
+.room{background:#20344b;border:1px solid #304a63;border-radius:18px;padding:21px}
+.room-name{font-size:18px;color:#c7d6e7}
+.room-temp{font-size:35px;font-weight:bold;margin-top:15px}
+.room-humidity{font-size:19px;color:#9bd5ed;margin-top:9px}
+footer{display:flex;justify-content:space-between;color:#8298ad;font-size:13px;margin-top:18px}
+@media(max-width:650px){
+main{padding:18px}
+#clock{font-size:58px}
+#temperature{font-size:30px}
+.rooms{gap:8px}
+.room{padding:12px}
+.room-temp{font-size:24px}
+.room-name,.room-humidity{font-size:14px}
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div>
+<div class="small">DUBAI · HOME</div>
+<div id="clock">--:--</div>
+<div id="date">Loading date...</div>
+</div>
+<div class="weather">
+<div id="temperature">--°C</div>
+<div id="conditions">Loading weather...</div>
+</div>
+</header>
+
+<section class="rooms">
+<div class="room">
+<div class="room-name">Office</div>
+<div class="room-temp">21.6°C</div>
+<div class="room-humidity">💧 71%</div>
+</div>
+<div class="room">
+<div class="room-name">Living Room</div>
+<div class="room-temp">22.9°C</div>
+<div class="room-humidity">💧 67%</div>
+</div>
+<div class="room">
+<div class="room-name">Bedroom</div>
+<div class="room-temp">21.6°C</div>
+<div class="room-humidity">💧 79%</div>
+</div>
+</section>
+
+<footer>
+<span>HOMEY SENSOR INTEGRATION · COMING NEXT</span>
+<span>Room readings are sample values</span>
+</footer>
+</main>
+<script>
+function updateClock(){
+const now=new Date();
+document.getElementById("clock").textContent=
+new Intl.DateTimeFormat("en-GB",{
+timeZone:"Asia/Dubai",hour:"2-digit",minute:"2-digit",
+hourCycle:"h23"
+}).format(now);
+document.getElementById("date").textContent=
+new Intl.DateTimeFormat("en-GB",{
+timeZone:"Asia/Dubai",weekday:"long",day:"numeric",
+month:"long",year:"numeric"
+}).format(now);
+}
+updateClock();
+setInterval(updateClock,1000);
+
+async function updateWeather(){
+try{
+const url="https://api.open-meteo.com/v1/forecast?latitude=25.095&longitude=55.235&current=temperature_2m,weather_code&timezone=Asia%2FDubai";
+const response=await fetch(url);
+if(!response.ok)throw Error("Weather unavailable");
+const data=await response.json();
+const current=data.current;
+document.getElementById("temperature").textContent=
+Math.round(current.temperature_2m)+"°C";
+const code=current.weather_code;
+let description="Cloudy";
+if(code===0)description="☀️ Clear";
+else if(code<=3)description="⛅ Partly cloudy";
+else if(code<=48)description="🌫️ Hazy or foggy";
+else if(code<=67)description="🌧️ Rain";
+else if(code<=77)description="❄️ Snow";
+else if(code<=82)description="🌦️ Showers";
+else if(code>=95)description="⛈️ Thunderstorms";
+document.getElementById("conditions").textContent=description;
+}catch(error){
+document.getElementById("conditions").textContent=
+"Weather temporarily unavailable";
+}
+}
+updateWeather();
+setInterval(updateWeather,15*60*1000);
+</script>
+</body>
+</html>
