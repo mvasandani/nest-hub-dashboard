@@ -33,17 +33,17 @@ html,body {
 main {
   width:100%;
   min-height:100vh;
-  padding:20px 24px;
+  padding:18px 22px;
   display:flex;
   flex-direction:column;
-  gap:14px;
+  gap:13px;
 }
 
 header {
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
-  gap:16px;
+  gap:12px;
 }
 
 .eyebrow {
@@ -61,13 +61,15 @@ header {
 }
 
 #date {
-  color:var(--muted);
-  font-size:19px;
+  color:var(--text);
+  font-size:28px;
+  font-weight:600;
   margin-top:5px;
 }
 
 .weather {
   text-align:right;
+  min-width:0;
 }
 
 #temperature {
@@ -76,16 +78,16 @@ header {
 }
 
 #conditions {
-  font-size:19px;
+  font-size:25px;
   color:var(--muted);
-  margin-top:4px;
+  margin-top:3px;
 }
 
 .weather-extra {
-  font-size:16px;
+  font-size:21px;
   color:var(--muted);
-  margin-top:9px;
-  line-height:1.6;
+  margin-top:7px;
+  line-height:1.5;
 }
 
 .section-title {
@@ -98,50 +100,51 @@ header {
 .grid {
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:12px;
+  gap:11px;
 }
 
 .card {
   background:var(--card);
   border:1px solid var(--border);
   border-radius:15px;
-  padding:16px 18px;
+  padding:17px 17px;
   min-width:0;
 }
 
 .card-title {
-  font-size:19px;
+  font-size:25px;
   font-weight:600;
   color:#e0ebf6;
-  margin-bottom:9px;
+  margin-bottom:10px;
 }
 
 .reading {
   font-size:39px;
   font-weight:700;
+  white-space:nowrap;
 }
 
 .humidity {
-  font-size:21px;
+  font-size:28px;
   color:var(--blue);
-  margin-top:5px;
+  margin-top:7px;
 }
 
 .status {
-  font-size:15px;
+  font-size:18px;
   color:var(--muted);
   line-height:1.4;
-  margin-top:5px;
+  margin-top:6px;
 }
 
 .info-main {
-  font-size:24px;
+  font-size:25px;
   font-weight:600;
-  margin-bottom:7px;
+  margin-bottom:8px;
 }
 
 .info-sub {
-  font-size:17px;
+  font-size:19px;
   color:var(--muted);
   line-height:1.5;
 }
@@ -157,23 +160,64 @@ footer {
 }
 
 @media(max-width:650px) {
-  main { padding:13px; gap:11px; }
-  #clock { font-size:49px; }
+  main {
+    padding:12px;
+    gap:10px;
+  }
+
+  header { gap:8px; }
+
+  #clock {
+    font-size:47px;
+    letter-spacing:-2px;
+  }
+
+  #date { font-size:21px; }
+
   #temperature { font-size:32px; }
-  #date { font-size:15px; }
+
+  #conditions { font-size:18px; }
+
+  .weather-extra {
+    font-size:14px;
+    line-height:1.6;
+  }
+
   .eyebrow { font-size:13px; }
-  .weather-extra { font-size:12px; }
-  #conditions { font-size:15px; }
-  .card { padding:11px; }
-  .card-title { font-size:15px; }
-  .reading { font-size:27px; }
-  .humidity { font-size:16px; }
-  .status { font-size:12px; }
+
   .section-title { font-size:13px; }
+
   .grid { gap:7px; }
-  .info-main { font-size:20px; }
-  .info-sub { font-size:14px; }
+
+  .card { padding:11px 9px; }
+
+  .card-title {
+    font-size:17px;
+    margin-bottom:7px;
+  }
+
+  .reading { font-size:27px; }
+
+  .humidity { font-size:20px; }
+
+  .status { font-size:12px; }
+
+  .info-main { font-size:21px; }
+
+  .info-sub { font-size:15px; }
+
   footer { font-size:10px; }
+}
+
+@media(max-width:390px) {
+  #clock { font-size:39px; }
+  #date { font-size:18px; }
+  #temperature { font-size:28px; }
+  #conditions { font-size:15px; }
+  .weather-extra { font-size:12px; }
+  .card-title { font-size:14px; }
+  .reading { font-size:24px; }
+  .humidity { font-size:17px; }
 }
 </style>
 </head>
@@ -201,32 +245,28 @@ footer {
 <div class="section-title">HOME ENVIRONMENT</div>
 
 <section class="grid">
+
   <div class="card">
     <div class="card-title">Office</div>
     <div class="reading" id="office-temp">--°C</div>
     <div class="humidity" id="office-humidity">💧 --%</div>
-    <div class="status" id="office-status">
-      Connecting...
-    </div>
+    <div class="status" id="office-status">Connecting...</div>
   </div>
 
   <div class="card">
     <div class="card-title">Living Room</div>
     <div class="reading" id="living-temp">--°C</div>
     <div class="humidity" id="living-humidity">💧 --%</div>
-    <div class="status" id="living-status">
-      Connecting...
-    </div>
+    <div class="status" id="living-status">Connecting...</div>
   </div>
 
   <div class="card">
     <div class="card-title">Master Bedroom</div>
     <div class="reading" id="bedroom-temp">--°C</div>
     <div class="humidity" id="bedroom-humidity">💧 --%</div>
-    <div class="status" id="bedroom-status">
-      Connecting...
-    </div>
+    <div class="status" id="bedroom-status">Connecting...</div>
   </div>
+
 </section>
 
 <div class="section-title">YOUR DAY</div>
@@ -244,7 +284,7 @@ footer {
 </section>
 
 <footer>
-  <span>HOME DASHBOARD · VERSION 3</span>
+  <span>HOME DASHBOARD · VERSION 4</span>
   <span id="updated">Weather updating...</span>
 </footer>
 
@@ -254,7 +294,6 @@ footer {
 "use strict";
 
 const TIME_ZONE = "Asia/Dubai";
-
 const SENSOR_API =
   "https://homey-sensor-bridge.mvasandani.workers.dev/api/sensors";
 
@@ -273,14 +312,20 @@ function updateClock() {
   document.getElementById("clock").textContent =
     formatTime(now);
 
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone:TIME_ZONE,
+    weekday:"short",
+    day:"numeric",
+    month:"short"
+  }).formatToParts(now);
+
+  const getPart = type =>
+    parts.find(part => part.type === type)?.value || "";
+
   document.getElementById("date").textContent =
-    new Intl.DateTimeFormat("en-GB", {
-      timeZone:TIME_ZONE,
-      weekday:"long",
-      day:"numeric",
-      month:"long",
-      year:"numeric"
-    }).format(now);
+    getPart("weekday") + ", " +
+    getPart("day") + " " +
+    getPart("month");
 }
 
 updateClock();
@@ -363,15 +408,15 @@ async function updateWeather() {
 updateWeather();
 setInterval(updateWeather,15*60*1000);
 
-// HOMEY LIVE SENSOR INTEGRATION
+// LIVE HOMEY SENSOR INTEGRATION
 
 const SENSOR_ROOMS = [
-  { key:"office", id:"office" },
-  { key:"livingRoom", id:"living" },
-  { key:"bedroom", id:"bedroom" }
+  {key:"office",id:"office"},
+  {key:"livingRoom",id:"living"},
+  {key:"bedroom",id:"bedroom"}
 ];
 
-function updateRoom(room, reading) {
+function updateRoom(room,reading) {
   const temperature =
     document.getElementById(room.id+"-temp");
   const humidity =
@@ -400,8 +445,7 @@ function updateRoom(room, reading) {
     if(Number.isFinite(ageMinutes) &&
        ageMinutes>15) {
       status.textContent =
-        "Updated "+formatTime(lastUpdate)+
-        " · Delayed";
+        "Updated "+formatTime(lastUpdate)+" · Delayed";
     } else {
       status.textContent =
         "Updated "+formatTime(lastUpdate);
@@ -443,17 +487,13 @@ updateSensors();
 setInterval(updateSensors,60*1000);
 
 /*
-  FUTURE SECURE INTEGRATIONS
+  FUTURE SECURE INTEGRATION
 
   Microsoft 365:
     Next upcoming Outlook work meeting
 
-  Nest Doorbell:
-    Optional future integration
-
-  IMPORTANT:
   Do not put Homey access tokens,
-  Microsoft credentials or API secrets
+  Microsoft credentials, or API secrets
   in this public HTML file.
 */
 </script>
