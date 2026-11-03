@@ -3,117 +3,407 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="refresh" content="3600">
-<title>Home Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101d2d">
+<title>Mukesh Home Dashboard</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#101d2d;color:#f5f8ff;font-family:Arial,Helvetica,sans-serif}
-main{width:100%;min-height:100vh;padding:28px 36px;display:flex;flex-direction:column;justify-content:space-between}
-header{display:flex;align-items:center;justify-content:space-between}
-.small{color:#aebfd0;font-size:17px}
-#clock{font-size:92px;font-weight:600;letter-spacing:-4px;line-height:1.1}
-#date{font-size:21px;color:#c6d4e2;margin-top:7px}
-.weather{text-align:right}
-#temperature{font-size:48px;font-weight:bold}
-#conditions{font-size:18px;color:#c6d4e2;margin-top:6px}
-.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:25px}
-.room{background:#20344b;border:1px solid #304a63;border-radius:18px;padding:21px}
-.room-name{font-size:18px;color:#c7d6e7}
-.room-temp{font-size:35px;font-weight:bold;margin-top:15px}
-.room-humidity{font-size:19px;color:#9bd5ed;margin-top:9px}
-footer{display:flex;justify-content:space-between;color:#8298ad;font-size:13px;margin-top:18px}
-@media(max-width:650px){
-main{padding:18px}
-#clock{font-size:58px}
-#temperature{font-size:30px}
-.rooms{gap:8px}
-.room{padding:12px}
-.room-temp{font-size:24px}
-.room-name,.room-humidity{font-size:14px}
+:root {
+  --bg:#101d2d;
+  --card:#20344b;
+  --border:#304a63;
+  --text:#f5f8ff;
+  --muted:#aebfd0;
+  --blue:#8ed7f5;
+  --green:#8ce0b2;
+  --yellow:#ffd27d;
+}
+* { box-sizing:border-box; }
+
+html,body {
+  margin:0;
+  width:100%;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+main {
+  width:100%;
+  min-height:100vh;
+  padding:22px 28px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+.eyebrow {
+  color:var(--muted);
+  font-size:13px;
+  letter-spacing:1px;
+}
+
+#clock {
+  font-size:75px;
+  font-weight:700;
+  letter-spacing:-3px;
+  line-height:1.1;
+  white-space:nowrap;
+}
+
+#date {
+  color:var(--muted);
+  font-size:16px;
+  margin-top:3px;
+}
+
+.weather {
+  text-align:right;
+}
+
+#temperature {
+  font-size:42px;
+  font-weight:700;
+}
+
+#conditions {
+  font-size:15px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.weather-extra {
+  font-size:12px;
+  color:var(--muted);
+  margin-top:8px;
+  line-height:1.7;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+
+.card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:15px 17px;
+  min-width:0;
+}
+
+.card-title {
+  font-size:14px;
+  font-weight:600;
+  color:#d4e2f0;
+  margin-bottom:9px;
+}
+
+.reading {
+  font-size:29px;
+  font-weight:700;
+}
+
+.humidity {
+  font-size:15px;
+  color:var(--blue);
+  margin-top:5px;
+}
+
+.status {
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.45;
+}
+
+.section-title {
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:1px;
+  margin-top:2px;
+}
+
+.info-grid {
+  display:grid;
+  grid-template-columns:1.5fr 1fr 1fr;
+  gap:12px;
+}
+
+.info-grid .card {
+  min-height:105px;
+}
+
+.info-main {
+  font-size:17px;
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.info-sub {
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.5;
+}
+
+footer {
+  margin-top:auto;
+  display:flex;
+  justify-content:space-between;
+  color:#8298ad;
+  font-size:11px;
+  padding-top:3px;
+}
+
+@media(max-width:650px) {
+  main { padding:13px; gap:9px; }
+  #clock { font-size:47px; }
+  #temperature { font-size:29px; }
+  #date { font-size:12px; }
+  .card { padding:10px; }
+  .reading { font-size:22px; }
+  .info-grid { gap:7px; }
+  .grid { gap:7px; }
+  .card-title { font-size:12px; }
+  .status,.info-sub { font-size:11px; }
 }
 </style>
 </head>
+
 <body>
 <main>
+
 <header>
-<div>
-<div class="small">DUBAI · HOME</div>
-<div id="clock">--:--</div>
-<div id="date">Loading date...</div>
-</div>
-<div class="weather">
-<div id="temperature">--°C</div>
-<div id="conditions">Loading weather...</div>
-</div>
+  <div>
+    <div class="eyebrow">DUBAI · HOME</div>
+    <div id="clock">--:--</div>
+    <div id="date">Loading date...</div>
+  </div>
+
+  <div class="weather">
+    <div id="temperature">--°C</div>
+    <div id="conditions">Loading weather...</div>
+    <div class="weather-extra">
+      <div id="highlow">High --° · Low --°</div>
+      <div id="sun">Sunrise --:-- · Sunset --:--</div>
+    </div>
+  </div>
 </header>
 
-<section class="rooms">
-<div class="room">
-<div class="room-name">Office</div>
-<div class="room-temp">21.6°C</div>
-<div class="room-humidity">💧 71%</div>
-</div>
-<div class="room">
-<div class="room-name">Living Room</div>
-<div class="room-temp">22.9°C</div>
-<div class="room-humidity">💧 67%</div>
-</div>
-<div class="room">
-<div class="room-name">Bedroom</div>
-<div class="room-temp">21.6°C</div>
-<div class="room-humidity">💧 79%</div>
-</div>
+<div class="section-title">HOME ENVIRONMENT</div>
+
+<section class="grid">
+  <div class="card">
+    <div class="card-title">Office</div>
+    <div class="reading" id="office-temp">--°C</div>
+    <div class="humidity" id="office-humidity">💧 --%</div>
+    <div class="status" id="office-status">
+      Awaiting Homey connection
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Living Room</div>
+    <div class="reading" id="living-temp">--°C</div>
+    <div class="humidity" id="living-humidity">💧 --%</div>
+    <div class="status" id="living-status">
+      Awaiting Homey connection
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Master Bedroom</div>
+    <div class="reading" id="bedroom-temp">--°C</div>
+    <div class="humidity" id="bedroom-humidity">💧 --%</div>
+    <div class="status" id="bedroom-status">
+      Awaiting Homey connection
+    </div>
+  </div>
+</section>
+
+<div class="section-title">YOUR DAY</div>
+
+<section class="info-grid">
+
+  <div class="card">
+    <div class="card-title">📅 Next Work Meeting</div>
+    <div class="info-main" id="meeting-title">
+      Outlook not connected
+    </div>
+    <div class="info-sub" id="meeting-details">
+      Secure calendar integration coming next
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✓ Reminders</div>
+    <div class="info-main" id="reminder-title">
+      Not connected
+    </div>
+    <div class="info-sub" id="reminder-details">
+      Reminders integration pending
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔔 Nest Doorbell</div>
+    <div class="info-main" id="doorbell-title">
+      Not connected
+    </div>
+    <div class="info-sub" id="doorbell-details">
+      Homey doorbell status pending
+    </div>
+  </div>
+
 </section>
 
 <footer>
-<span>HOMEY SENSOR INTEGRATION · COMING NEXT</span>
-<span>Room readings are sample values</span>
+  <span>HOME DASHBOARD · VERSION 2</span>
+  <span id="updated">Weather updating...</span>
 </footer>
+
 </main>
+
 <script>
-function updateClock(){
-const now=new Date();
-document.getElementById("clock").textContent=
-new Intl.DateTimeFormat("en-GB",{
-timeZone:"Asia/Dubai",hour:"2-digit",minute:"2-digit",
-hourCycle:"h23"
-}).format(now);
-document.getElementById("date").textContent=
-new Intl.DateTimeFormat("en-GB",{
-timeZone:"Asia/Dubai",weekday:"long",day:"numeric",
-month:"long",year:"numeric"
-}).format(now);
+"use strict";
+
+const TIME_ZONE = "Asia/Dubai";
+
+function formatTime(date) {
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone:TIME_ZONE,
+    hour:"numeric",
+    minute:"2-digit",
+    hour12:true
+  }).format(date);
 }
+
+function updateClock() {
+  const now = new Date();
+
+  document.getElementById("clock").textContent =
+    formatTime(now);
+
+  document.getElementById("date").textContent =
+    new Intl.DateTimeFormat("en-GB", {
+      timeZone:TIME_ZONE,
+      weekday:"long",
+      day:"numeric",
+      month:"long",
+      year:"numeric"
+    }).format(now);
+}
+
 updateClock();
 setInterval(updateClock,1000);
 
-async function updateWeather(){
-try{
-const url="https://api.open-meteo.com/v1/forecast?latitude=25.095&longitude=55.235&current=temperature_2m,weather_code&timezone=Asia%2FDubai";
-const response=await fetch(url);
-if(!response.ok)throw Error("Weather unavailable");
-const data=await response.json();
-const current=data.current;
-document.getElementById("temperature").textContent=
-Math.round(current.temperature_2m)+"°C";
-const code=current.weather_code;
-let description="Cloudy";
-if(code===0)description="☀️ Clear";
-else if(code<=3)description="⛅ Partly cloudy";
-else if(code<=48)description="🌫️ Hazy or foggy";
-else if(code<=67)description="🌧️ Rain";
-else if(code<=77)description="❄️ Snow";
-else if(code<=82)description="🌦️ Showers";
-else if(code>=95)description="⛈️ Thunderstorms";
-document.getElementById("conditions").textContent=description;
-}catch(error){
-document.getElementById("conditions").textContent=
-"Weather temporarily unavailable";
+function weatherDescription(code) {
+  if(code===0) return "☀️ Clear";
+  if(code<=3) return "⛅ Partly cloudy";
+  if(code<=48) return "🌫️ Hazy or foggy";
+  if(code<=67) return "🌧️ Rain";
+  if(code<=77) return "❄️ Snow";
+  if(code<=82) return "🌦️ Showers";
+  if(code<=86) return "❄️ Snow showers";
+  if(code>=95) return "⛈️ Thunderstorms";
+  return "Weather available";
 }
+
+function formatSunTime(value) {
+  if(!value) return "--:--";
+  const parts=value.split("T");
+  if(parts.length!==2) return "--:--";
+
+  const time=parts[1].slice(0,5).split(":");
+  const hour=Number(time[0]);
+  const minute=time[1];
+
+  if(!Number.isFinite(hour)) return "--:--";
+
+  return ((hour%12)||12)+":"+minute+
+    (hour>=12?" PM":" AM");
 }
+
+async function updateWeather() {
+  const url =
+    "https://api.open-meteo.com/v1/forecast"+
+    "?latitude=25.095&longitude=55.235"+
+    "&current=temperature_2m,weather_code"+
+    "&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset"+
+    "&timezone=Asia%2FDubai&forecast_days=1";
+
+  try {
+    const response=await fetch(url,{
+      cache:"no-store"
+    });
+
+    if(!response.ok) {
+      throw new Error("Weather request failed");
+    }
+
+    const data=await response.json();
+
+    document.getElementById("temperature").textContent =
+      Math.round(data.current.temperature_2m)+"°C";
+
+    document.getElementById("conditions").textContent =
+      weatherDescription(data.current.weather_code);
+
+    const daily=data.daily;
+
+    document.getElementById("highlow").textContent =
+      "High "+Math.round(daily.temperature_2m_max[0])+"°"+
+      " · Low "+Math.round(daily.temperature_2m_min[0])+"°";
+
+    document.getElementById("sun").textContent =
+      "Sunrise "+formatSunTime(daily.sunrise[0])+
+      " · Sunset "+formatSunTime(daily.sunset[0]);
+
+    document.getElementById("updated").textContent =
+      "Weather updated "+formatTime(new Date());
+
+  } catch(error) {
+    document.getElementById("conditions").textContent =
+      "Weather temporarily unavailable";
+
+    document.getElementById("updated").textContent =
+      "Weather connection unavailable";
+  }
+}
+
 updateWeather();
 setInterval(updateWeather,15*60*1000);
+
+/*
+  FUTURE SECURE INTEGRATIONS
+
+  Homey:
+    Office temperature and humidity
+    Living Room temperature and humidity
+    Master Bedroom temperature and humidity
+    Nest Doorbell events/status
+
+  Microsoft 365:
+    Next upcoming Outlook work meeting
+
+  Reminders:
+    Selected upcoming personal reminders
+
+  IMPORTANT:
+  Do not put Homey access tokens,
+  Microsoft credentials, private calendar URLs,
+  or API secrets in this public HTML file.
+
+  These integrations require a private,
+  authenticated data source.
+*/
 </script>
 </body>
 </html>
